@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyhr6s2kg58ig"]
+
+[ext_resource type="PackedScene" uid="uid://cs4ao77rsdw3l" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Mountain.tscn" id="1_rtpcb"]
+[ext_resource type="Texture2D" uid="uid://c4nr6d2hv6v4u" path="res://Ian Game/Textures/Warning Vines.png" id="2_vdn27"]
+
+[node name="Obstacle3" instance=ExtResource("1_rtpcb")]
+
+[node name="Obstacle6" parent="." index="1"]
+position = Vector2(408, 0)
+
+[node name="Obstacle2" parent="." index="2"]
+position = Vector2(408, -128)
+
+[node name="Obstacle3" parent="." index="4"]
+position = Vector2(432, -256)
+
+[node name="Obstacle5" parent="." index="5"]
+position = Vector2(1400, -376)
+
+[node name="Obstacle7" parent="." index="6"]
+position = Vector2(1368, -512)
+
+[node name="Obstacle8" parent="." index="7"]
+position = Vector2(864, -8)
+
+[node name="Obstacle9" parent="." index="8"]
+position = Vector2(880, -288)
+
+[node name="Obstacle10" parent="." index="9"]
+position = Vector2(864, -136)
+
+[node name="Obstacle11" parent="." index="10"]
+position = Vector2(824, -264)
+
+[node name="Obstacle12" parent="." index="11"]
+position = Vector2(1120, -8)
+
+[node name="WarningSign" parent="." index="12"]
+z_index = 0
+position = Vector2(1040, 400)
+
+[node name="Obstacle13" parent="." index="13"]
+position = Vector2(880, -392)
+
+[node name="Obstacle14" parent="." index="14"]
+position = Vector2(640, -8)
+
+[node name="Obstacle15" parent="." index="15"]
+position = Vector2(144, -128)
+
+[node name="Obstacle16" parent="." index="16"]
+position = Vector2(960, -264)
+
+[node name="Obstacle17" parent="." index="17"]
+position = Vector2(744, -392)
+
+[node name="Obstacle18" parent="." index="18"]
+position = Vector2(1416, -128)
+
+[node name="Obstacle19" parent="." index="19"]
+position = Vector2(1368, 0)
+
+[node name="Obstacle20" parent="." index="20"]
+position = Vector2(1352, -256)
+
+[node name="3000m" parent="." index="21"]
+position = Vector2(456, 632)
+
+[node name="WarningVines" type="Sprite2D" parent="." index="22"]
+position = Vector2(1120, -88)
+scale = Vector2(0.36465, 0.36465)
+texture = ExtResource("2_vdn27")
+
+[editable path="Obstacle"]
+[editable path="Obstacle6"]
+[editable path="Obstacle2"]
+[editable path="Obstacle3"]
+[editable path="Obstacle5"]
+[editable path="Obstacle7"]
+[editable path="Obstacle8"]
+[editable path="Obstacle9"]
+[editable path="Obstacle10"]
+[editable path="Obstacle11"]
+[editable path="Obstacle13"]
+[editable path="Obstacle14"]
+[editable path="Obstacle15"]
+[editable path="Obstacle16"]
+[editable path="Obstacle17"]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://wmrhbj4yde0s"]
+
+[ext_resource type="PackedScene" uid="uid://crg1i46xfj0pc" path="res://Ian Game/Scenes/Obstacles/obstacle.tscn" id="1_g8wqt"]
+[ext_resource type="Texture2D" uid="uid://voxyha5mvpoo" path="res://Ian Game/Textures/Tree Guy.png" id="2_tkmvq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_25jtl"]
+size = Vector2(74.7435, 63.6353)
+
+[node name="Obstacle" instance=ExtResource("1_g8wqt")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+position = Vector2(24.7557, -858.405)
+rotation = -3.14138
+scale = Vector2(0.223775, 0.904004)
+texture = ExtResource("2_tkmvq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(33.7245, -867.462)
+rotation = 3.14159
+scale = Vector2(1.23825, 9.9147)
+shape = SubResource("RectangleShape2D_25jtl")

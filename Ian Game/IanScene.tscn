@@ -1,0 +1,394 @@
+[gd_scene load_steps=34 format=3 uid="uid://swgkg14gq8e"]
+
+[ext_resource type="Script" path="res://Ian Game/Scenes/Jumpldorf.gd" id="1_mg3jw"]
+[ext_resource type="Script" path="res://Ian Game/Scenes/Obstacles/Obstacle Spawner.gd" id="4_ltwwl"]
+[ext_resource type="PackedScene" uid="uid://p6jmsvp0ilqo" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Yellow Train Forwards.tscn" id="5_4aexh"]
+[ext_resource type="PackedScene" uid="uid://cghrenaylrrdt" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Purple Train Towards Player.tscn" id="6_c4nd5"]
+[ext_resource type="PackedScene" uid="uid://cqjvv7b02dbws" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Boxes 1.tscn" id="6_cj0nw"]
+[ext_resource type="PackedScene" uid="uid://crqeuimby8pj6" path="res://Ian Game/Scenes/Obstacles/Red Car.tscn" id="6_j1n3y"]
+[ext_resource type="PackedScene" uid="uid://gbdtdr8aumtn" path="res://Ian Game/Scenes/Obstacles/Stoplight.tscn" id="7_42uqe"]
+[ext_resource type="PackedScene" uid="uid://jsscitkkhkc3" path="res://Ian Game/Scenes/Obstacles/Train Tracks.tscn" id="7_68prg"]
+[ext_resource type="PackedScene" uid="uid://l3v1ug3utq4c" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Boxes 2.tscn" id="7_pw2fk"]
+[ext_resource type="PackedScene" uid="uid://ds2qpvb055yyl" path="res://Ian Game/Scenes/Obstacles/Crate.tscn" id="8_6ng3i"]
+[ext_resource type="PackedScene" uid="uid://cs4ao77rsdw3l" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Mountain.tscn" id="11_lp1te"]
+[ext_resource type="PackedScene" uid="uid://cbuw4fbpsubv8" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Nyoom Train.tscn" id="12_av6go"]
+[ext_resource type="PackedScene" uid="uid://ds7bvboa0yysq" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Duck Train.tscn" id="13_ulyq6"]
+[ext_resource type="PackedScene" uid="uid://dyhr6s2kg58ig" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/pillars.tscn" id="14_kg1f2"]
+[ext_resource type="PackedScene" uid="uid://c82j4jf3ttwom" path="res://Ian Game/big_light.tscn" id="16_a1twn"]
+[ext_resource type="Script" path="res://addons/godOSC/scripts/OSCServer.gd" id="16_f6eld"]
+[ext_resource type="Texture2D" uid="uid://c0bht53nuelrk" path="res://Ian Game/Textures/Train background.png" id="17_a6n54"]
+[ext_resource type="PackedScene" uid="uid://i3olokfk7wd3" path="res://Ian Game/Scenes/train_tracks_grey.tscn" id="18_e542l"]
+[ext_resource type="PackedScene" uid="uid://ddf6lotjy7kf0" path="res://Ian Game/star_spawner.tscn" id="18_j0jb6"]
+[ext_resource type="PackedScene" uid="uid://dy8xu80k1rncj" path="res://Ian Game/rotating_light.tscn" id="20_l5qto"]
+[ext_resource type="PackedScene" uid="uid://bg4pskll0ck4y" path="res://Ian Game/star.tscn" id="21_k0244"]
+
+[sub_resource type="GDScript" id="GDScript_ga7pi"]
+resource_name = "root"
+script/source = "extends OSCClient
+
+@export var lights_range: Vector2 = Vector2(1, 3)
+@export var lights: Array[Node2D]
+
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	connect_socket(ip_address, port)
+	IanGameManager.bass_note.connect(_on_bass_note)
+	for light: Node2D in lights:
+		light.IAMDEAD.connect(_on_rotating_light_DEAD)
+	get_tree().auto_accept_quit = false
+	send_message(\"/go_start_mode\", [1])
+
+func send_message(osc_address : String, args : Array):
+	var packet = prepare_message(osc_address, args)
+	client.put_packet(packet)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_star_spawner_star_spawned(star: Node2D) -> void:
+	add_child(star)
+
+
+func _on_rotating_light_spawner_birth_given(node: Node2D) -> void:
+	add_child(node)
+	lights.append(node)
+	node.IAMDEAD.connect(_on_rotating_light_DEAD)
+
+
+func _on_bass_note(note: int) -> void:
+	for i in randi_range(lights_range.x, lights_range.y):
+		var light: Node2D = lights.pick_random()
+		if !light:#
+			_on_rotating_light_DEAD(light)
+			_on_bass_note(0)
+			return
+		light.light()
+
+func _on_rotating_light_DEAD(node: Node2D) -> void:
+	lights.erase(node)
+
+
+func _on_jumpldorf_i_am_dead() -> void:
+	get_tree().reload_current_scene()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		send_message(\"/go_stop_mode\", [1])
+		get_tree().quit()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stbhp"]
+size = Vector2(89.6, 187.844)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hphcm"]
+load_path = "res://.godot/imported/Clown1.png-5578949951a7fa9775455c617d21e858.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w4mcv"]
+load_path = "res://.godot/imported/Clown2.png-eb97f0131c315b4a4d45145d3d6b7f68.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ab4wy"]
+load_path = "res://.godot/imported/Clown3.png-e4c2c84a9ac454b00056d588d92948cf.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nwmjk"]
+load_path = "res://.godot/imported/Clown4.png-dd76ec44ec374ccb6726ac673d8173a1.ctex"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kq6pb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_hphcm")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_w4mcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_ab4wy")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_nwmjk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_7n8xg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nme3l"]
+resource_name = "fix_color"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h1g5d"]
+_data = {
+"RESET": SubResource("Animation_7n8xg"),
+"fix_color": SubResource("Animation_nme3l")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_63ar6"]
+size = Vector2(2182.57, 4)
+
+[sub_resource type="GDScript" id="GDScript_omadg"]
+resource_name = "rotate_light_spawner"
+script/source = "extends Node2D
+
+@export var scene: PackedScene
+@export var height_range: Vector2 = Vector2(0, 20)
+@export var distanceBetweenObstacles: float
+@export var distanceVariation: Vector2
+
+signal birth_given(node: Node2D)
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	randomize()
+	while true:
+		spawnObstacle()
+		var nextDistance = distanceBetweenObstacles + randf_range(distanceVariation.x, distanceVariation.y)
+		var time = nextDistance / IanGameManager.speed
+		if get_tree() != null:
+			var timer = get_tree().create_timer(time)
+			await timer.timeout
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func spawnObstacle():
+	var node: Node2D = scene.instantiate()
+	node.global_position.x = global_position.x
+	node.global_position.y = randf_range(height_range.x, height_range.y)
+	birth_given.emit(node)
+ 
+"
+
+[node name="IanScene" type="Node2D" node_paths=PackedStringArray("lights")]
+scale = Vector2(0.990345, 1)
+script = SubResource("GDScript_ga7pi")
+lights = [NodePath("StartingLights/PointLight2D2"), NodePath("StartingLights/PointLight2D"), NodePath("StartingLights/PointLight2D3"), NodePath("StartingLights/PointLight2D4"), NodePath("StartingLights/PointLight2D5"), NodePath("StartingLights/PointLight2D6"), NodePath("StartingLights/PointLight2D7"), NodePath("StartingLights/PointLight2D8")]
+
+[node name="Jumpldorf" type="CharacterBody2D" parent="."]
+position = Vector2(1833.7, 784)
+platform_on_leave = 2
+script = ExtResource("1_mg3jw")
+gravity = 1200
+SPEED = 700.0
+JUMP_VELOCITY = -1000.0
+RELEASE_IMPULSE = 100
+fallingGravityRatio = 1.0
+backwards_force_scale = 0.8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Jumpldorf"]
+position = Vector2(-48, 101.403)
+rotation = 3.14159
+scale = Vector2(1.25, 1.25)
+shape = SubResource("RectangleShape2D_stbhp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Jumpldorf"]
+texture_filter = 1
+position = Vector2(-43.5, 72.5)
+scale = Vector2(6.1, 6.1)
+sprite_frames = SubResource("SpriteFrames_kq6pb")
+frame = 1
+
+[node name="Colordorf" type="AnimatedSprite2D" parent="Jumpldorf"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(-43.5, 72.5)
+scale = Vector2(6.1, 6.1)
+sprite_frames = SubResource("SpriteFrames_kq6pb")
+frame = 1
+
+[node name="ColorFixer" type="AnimationPlayer" parent="Jumpldorf"]
+libraries = {
+"": SubResource("AnimationLibrary_h1g5d")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 544)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Camera2D"]
+position = Vector2(1.28116, 504)
+
+[node name="Collision" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
+position = Vector2(-136.287, -12)
+shape = SubResource("RectangleShape2D_63ar6")
+
+[node name="Obstacle Spawner" type="Node2D" parent="."]
+position = Vector2(2286.07, 1032)
+script = ExtResource("4_ltwwl")
+scenes = [ExtResource("6_c4nd5"), ExtResource("5_4aexh"), ExtResource("6_cj0nw"), ExtResource("7_pw2fk"), ExtResource("8_6ng3i"), ExtResource("6_j1n3y"), ExtResource("7_42uqe"), ExtResource("11_lp1te"), ExtResource("12_av6go"), ExtResource("13_ulyq6"), ExtResource("14_kg1f2")]
+distanceBetweenObstacles = 3200.0
+distanceVariation = Vector2(-500, 500)
+
+[node name="Track Spawner" type="Node2D" parent="."]
+position = Vector2(1987.19, -32)
+script = ExtResource("4_ltwwl")
+scenes = [ExtResource("7_68prg")]
+distanceBetweenObstacles = 1702.0
+distanceVariation = Vector2(1, 1)
+
+[node name="Rails" parent="." instance=ExtResource("7_68prg")]
+position = Vector2(121.169, -32)
+
+[node name="Also Rails" parent="." instance=ExtResource("7_68prg")]
+position = Vector2(-1001.67, -32)
+
+[node name="TheListener" type="Node" parent="."]
+script = ExtResource("16_f6eld")
+
+[node name="BigLight" parent="." instance=ExtResource("16_a1twn")]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="StarSpawner" parent="." instance=ExtResource("18_j0jb6")]
+position = Vector2(2051.81, 1080)
+range = Vector2(0, 830)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="BG" parent="." instance=ExtResource("18_e542l")]
+light_mask = 2
+z_index = -10
+position = Vector2(994.603, 1858)
+scale = Vector2(25.6205, 46.4388)
+texture = ExtResource("17_a6n54")
+
+[node name="RotatingLightSpawner" type="Node2D" parent="."]
+position = Vector2(1806.44, 979)
+script = SubResource("GDScript_omadg")
+scene = ExtResource("20_l5qto")
+height_range = Vector2(1080, 1000)
+distanceBetweenObstacles = 200.0
+distanceVariation = Vector2(-50, 300)
+
+[node name="StartingLights" type="Node2D" parent="."]
+z_index = -2
+
+[node name="PointLight2D" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(1454.04, 943)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="PointLight2D2" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(1200.59, 945)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="PointLight2D3" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(667.444, 931)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="PointLight2D4" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(208.008, 933)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="PointLight2D5" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(1755.43, 955)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="PointLight2D6" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(1501.98, 957)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="PointLight2D7" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(968.835, 943)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="PointLight2D8" parent="StartingLights" instance=ExtResource("20_l5qto")]
+position = Vector2(509.399, 945)
+scale = Vector2(1.78223, 10.4844)
+
+[node name="StartingStars" type="Node2D" parent="."]
+
+[node name="Star" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(66.8739, 58.25)
+
+[node name="Star2" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(283.74, 279)
+
+[node name="Star3" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(138.336, 237)
+
+[node name="Star4" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(141.365, 525)
+
+[node name="Star5" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(555.362, 420)
+
+[node name="Star6" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(432.173, 623)
+
+[node name="Star7" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1070.33, 247)
+
+[node name="Star8" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(864.345, 411)
+
+[node name="Star9" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(683.6, 152)
+
+[node name="Star10" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(726.01, 585)
+
+[node name="Star11" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1088.51, 782)
+
+[node name="Star12" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(829.004, 737)
+
+[node name="Star13" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(172.667, 773)
+
+[node name="Star14" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1351.04, 373)
+
+[node name="Star15" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1308.63, 155)
+
+[node name="Star16" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1305.61, 548)
+
+[node name="Star17" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1515.63, 738)
+
+[node name="Star18" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1625.7, 302)
+
+[node name="Star19" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1698.4, 508)
+
+[node name="Star20" parent="StartingStars" instance=ExtResource("21_k0244")]
+position = Vector2(1768.07, 121)
+
+[connection signal="i_am_dead" from="Jumpldorf" to="." method="_on_jumpldorf_i_am_dead"]
+[connection signal="star_spawned" from="StarSpawner" to="." method="_on_star_spawner_star_spawned"]
+[connection signal="birth_given" from="RotatingLightSpawner" to="." method="_on_rotating_light_spawner_birth_given"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://crqeuimby8pj6"]
+
+[ext_resource type="PackedScene" uid="uid://crg1i46xfj0pc" path="res://Ian Game/Scenes/Obstacles/obstacle.tscn" id="1_2brp8"]
+[ext_resource type="Texture2D" uid="uid://wsybf6jafnrf" path="res://Ian Game/Textures/Red train cars.png" id="2_llegi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0w4o"]
+size = Vector2(11.7682, 49.086)
+
+[node name="Obstacle" instance=ExtResource("1_2brp8")]
+position = Vector2(0, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+position = Vector2(164.79, -240.28)
+scale = Vector2(64.4464, 6.18179)
+shape = SubResource("RectangleShape2D_d0w4o")
+
+[node name="RedTrainCars" type="Sprite2D" parent="." index="1"]
+position = Vector2(136.73, -143.27)
+scale = Vector2(1.6591, 1.6591)
+texture = ExtResource("2_llegi")

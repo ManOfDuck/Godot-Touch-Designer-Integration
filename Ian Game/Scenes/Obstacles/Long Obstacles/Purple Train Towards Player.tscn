@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cghrenaylrrdt"]
+
+[ext_resource type="PackedScene" uid="uid://crg1i46xfj0pc" path="res://Ian Game/Scenes/Obstacles/obstacle.tscn" id="1_kk5qv"]
+[ext_resource type="Texture2D" uid="uid://5fku6gomseha" path="res://Ian Game/Textures/Purple Train.png" id="2_gv1dt"]
+[ext_resource type="Texture2D" uid="uid://cadpwfoc10h2c" path="res://Ian Game/Textures/Purple Car.png" id="3_yiifw"]
+
+[node name="Obstacle2" instance=ExtResource("1_kk5qv")]
+
+[node name="PurpleTrain" type="Sprite2D" parent="." index="0"]
+texture_filter = 1
+position = Vector2(504.92, -164.789)
+texture = ExtResource("2_gv1dt")
+
+[node name="PurpleCar" type="Sprite2D" parent="." index="1"]
+texture_filter = 1
+position = Vector2(1888.92, -164.789)
+texture = ExtResource("3_yiifw")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="2"]
+position = Vector2(-183.08, -4.789)
+polygon = PackedVector2Array(0, -114.24, 288.5, -322.47, 0, -5.68, 2696.4, 0, 2696, -322)

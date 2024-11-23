@@ -3,6 +3,11 @@ class_name OSCServer
 extends Node
 ## Server for recieving Open Sound Control messages over UDP. 
 
+signal drums_note(note: int)
+signal pluck_note(note: int)
+signal bass_note(note: int)
+signal latin_note(note: int)
+signal wah_wah_note(note: int)
 
 ## The port over which to recieve messages
 @export var port = 4646
@@ -19,6 +24,11 @@ var incoming_messages := {}
 var server = UDPServer.new()
 var peers: Array[PacketPeerUDP] = []
 
+var _drums_hit: Array[int] = []
+var _last_bass_note: int = -1
+var _last_wah_note: int = -1
+var _last_latin_note: int = -1
+
 func _ready():
 	server.listen(port)
 
@@ -26,6 +36,7 @@ func _ready():
 func listen(new_port):
 	port = new_port
 	server.listen(port)
+
 
 func _process(_delta):
 	server.poll()
@@ -130,7 +141,7 @@ func parse_bundle(packet: PackedByteArray):
 		bund_packet.insert(0,0)
 		#print(bund_packet)
 		var comma_index = bund_packet.find(44)
-		var address = bund_packet.slice(1, comma_index).get_string_from_ascii()
+		var address: String = bund_packet.slice(1, comma_index).get_string_from_ascii()
 		var args = bund_packet.slice(comma_index, packet.size())
 		var tags = args.get_string_from_ascii()
 		var vals = []
@@ -161,6 +172,25 @@ func parse_bundle(packet: PackedByteArray):
 					vals.append(args)
 				
 				
-		print(address, " ", vals)
+		if(vals[0] != 0):
+			if address.begins_with("/drums_note") and not _drums_hit.has(int(address.erase(0,11))):
+				IanGameManager.drums_note.emit(int(address.erase(0,11)))
+				_drums_hit.append(int(address.erase(0,11)))
+			if address.begins_with("/pluck_note"):
+				IanGameManager.pluck_note.emit(int(address.erase(0,11)))
+			if address.begins_with("/Bass"):
+				if vals[0] != _last_bass_note and vals[0] != -1:
+					IanGameManager.bass_note.emit(vals[0])
+				_last_bass_note = vals[0]
+			if address.begins_with("/Latin"):
+				if vals[0] != _last_latin_note and vals[0] != -1:
+					IanGameManager.latin_note.emit(vals[0])
+				_last_latin_note = vals[0]
+			if address.begins_with("/Wah_Wah"):
+				if vals[0] != _last_wah_note and vals[0] != -1:
+					IanGameManager.wah_wah_note.emit(vals[0])
+				_last_wah_note = vals[0]
+		elif address.begins_with("/drums_note") and _drums_hit.has(int(address.erase(0,11))):
+			_drums_hit.erase(int(address.erase(0,11)))
 		incoming_messages[address] = vals
 		

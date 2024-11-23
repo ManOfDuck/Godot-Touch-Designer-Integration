@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs4ao77rsdw3l"]
+
+[ext_resource type="PackedScene" uid="uid://l3v1ug3utq4c" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Boxes 2.tscn" id="1_oc43i"]
+[ext_resource type="Texture2D" uid="uid://b3t68jckk6ogd" path="res://Ian Game/Textures/3000m.png" id="2_vmvdc"]
+
+[node name="Obstacle3" instance=ExtResource("1_oc43i")]
+
+[node name="Obstacle4" parent="." index="3"]
+position = Vector2(1496, 1064)
+
+[node name="Obstacle5" parent="." index="5"]
+position = Vector2(416, -8)
+
+[node name="Obstacle7" parent="." index="6"]
+position = Vector2(336, -376)
+
+[node name="Obstacle8" parent="." index="7"]
+position = Vector2(544, 0)
+
+[node name="Obstacle9" parent="." index="8"]
+position = Vector2(432, -256)
+
+[node name="Obstacle10" parent="." index="9"]
+position = Vector2(544, -128)
+
+[node name="Obstacle11" parent="." index="10"]
+position = Vector2(672, 0)
+
+[node name="Obstacle12" parent="." index="11"]
+position = Vector2(1016, -560)
+
+[node name="WarningSign" parent="." index="12"]
+position = Vector2(-96, 896)
+
+[node name="Obstacle13" parent="." index="13"]
+position = Vector2(464, -384)
+
+[node name="Obstacle14" parent="." index="14"]
+position = Vector2(560, -256)
+
+[node name="Obstacle16" parent="." index="16"]
+position = Vector2(672, -128)
+
+[node name="Obstacle17" parent="." index="17"]
+position = Vector2(800, 0)
+
+[node name="Obstacle18" parent="." index="18"]
+position = Vector2(688, -256)
+
+[node name="Obstacle19" parent="." index="19"]
+position = Vector2(464, -512)
+
+[node name="3000m" type="Sprite2D" parent="." index="21"]
+position = Vector2(464, -680)
+scale = Vector2(0.3125, 0.3125)
+texture = ExtResource("2_vmvdc")
+
+[editable path="Obstacle"]
+[editable path="Obstacle6"]
+[editable path="Obstacle2"]
+[editable path="Obstacle3"]
+[editable path="Obstacle5"]
+[editable path="Obstacle7"]
+[editable path="Obstacle8"]
+[editable path="Obstacle9"]
+[editable path="Obstacle10"]
+[editable path="Obstacle11"]
+[editable path="Obstacle13"]
+[editable path="Obstacle14"]
+[editable path="Obstacle15"]
+[editable path="Obstacle16"]
+[editable path="Obstacle17"]

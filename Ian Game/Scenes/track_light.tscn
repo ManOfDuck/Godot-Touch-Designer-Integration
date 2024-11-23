@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://ba41dk0d603qi"]
+
+[sub_resource type="Gradient" id="Gradient_nigu0"]
+offsets = PackedFloat32Array(0, 0.0584416, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.49, 0.49, 0.49, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pt78x"]
+gradient = SubResource("Gradient_nigu0")
+width = 3
+height = 8
+fill_to = Vector2(0, 0.106838)
+
+[sub_resource type="GDScript" id="GDScript_b6osd"]
+resource_name = "track_light"
+script/source = "extends PointLight2D
+
+func light(light_color: Color) -> void:
+	color = light_color
+	$Area2D.color = light_color
+	$AnimationPlayer.play(\"light\")
+	await $AnimationPlayer.animation_finished
+	queue_free()
+"
+
+[sub_resource type="Animation" id="Animation_oedgm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_3p3cq"]
+resource_name = "light"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a3aun"]
+_data = {
+"RESET": SubResource("Animation_oedgm"),
+"light": SubResource("Animation_3p3cq")
+}
+
+[sub_resource type="GDScript" id="GDScript_6gxgh"]
+resource_name = "light_area"
+script/source = "extends Area2D
+
+var color: Color = Color.WHITE
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Jumpldorf:
+		body.boing(color)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffwi6"]
+size = Vector2(3, 3)
+
+[node name="PointLight2D" type="PointLight2D"]
+position = Vector2(49.517, 39)
+range_item_cull_mask = 8
+texture = SubResource("GradientTexture2D_pt78x")
+script = SubResource("GDScript_b6osd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a3aun")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+script = SubResource("GDScript_6gxgh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.0169983, 2.5)
+shape = SubResource("RectangleShape2D_ffwi6")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

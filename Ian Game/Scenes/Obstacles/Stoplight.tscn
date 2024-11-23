@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://gbdtdr8aumtn"]
+
+[ext_resource type="PackedScene" uid="uid://crg1i46xfj0pc" path="res://Ian Game/Scenes/Obstacles/obstacle.tscn" id="1_84710"]
+[ext_resource type="Texture2D" uid="uid://xbd7c8e0oegs" path="res://Ian Game/Textures/Red Light.png" id="2_4trc6"]
+[ext_resource type="Texture2D" uid="uid://cwju8wvn26p3t" path="res://Ian Game/Textures/Green Light.png" id="3_7r36c"]
+[ext_resource type="Texture2D" uid="uid://bcyb2dl34d0iw" path="res://Ian Game/Textures/Yellow Light.png" id="4_o06t4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cerme"]
+size = Vector2(8.41976, 35.3119)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xuh7l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4trc6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7r36c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_o06t4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="Obstacle" instance=ExtResource("1_84710")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+position = Vector2(-32, -944)
+rotation = 3.14159
+scale = Vector2(7.60117, -5.55053)
+shape = SubResource("RectangleShape2D_cerme")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
+position = Vector2(-32, -944)
+scale = Vector2(0.27972, 0.27972)
+sprite_frames = SubResource("SpriteFrames_xuh7l")
+autoplay = "default"
+frame_progress = 0.382699

@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://i3olokfk7wd3"]
+
+[ext_resource type="Texture2D" uid="uid://c2t4n08qb1d27" path="res://Ian Game/Textures/Train Tracks Grey.png" id="1_3sclq"]
+[ext_resource type="PackedScene" uid="uid://ba41dk0d603qi" path="res://Ian Game/Scenes/track_light.tscn" id="2_amfhe"]
+
+[sub_resource type="GDScript" id="GDScript_8g36l"]
+resource_name = "light_up_tracks"
+script/source = "extends Sprite2D
+
+@export var light_scene: PackedScene
+@export var rungs: int = 25
+@export var first_rung: float = -46.477
+@export var last_rung: float = 49.517
+@export var low_note: int = 60
+@export var high_note: int = 84
+@export var low_hue: float = 0
+@export var high_hue: float = 1
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	IanGameManager.wah_wah_note.connect(_go_wah_mode)
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _go_wah_mode(note: int) -> void:
+	var light: PointLight2D = light_scene.instantiate() as PointLight2D
+	add_child(light)
+	light.position.x = remap(note, low_note, high_note, first_rung, last_rung)
+	var color: Color = Color.from_hsv(remap(note, low_note, high_note, low_hue, high_hue), 1, 1)
+	light.light(color)
+"
+
+[node name="TrainTracksGrey" type="Sprite2D"]
+light_mask = 8
+z_index = -2
+position = Vector2(937.047, 312)
+scale = Vector2(18.72, 18.72)
+texture = ExtResource("1_3sclq")
+script = SubResource("GDScript_8g36l")
+light_scene = ExtResource("2_amfhe")

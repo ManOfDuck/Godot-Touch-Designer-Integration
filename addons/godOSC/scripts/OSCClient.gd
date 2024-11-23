@@ -6,7 +6,7 @@ extends Node
 ## The IP Address of the server to send to.
 @export var ip_address = "127.0.0.1"
 ## The port to send to.
-@export var port = 4646
+@export var port = 8888
 var client = PacketPeerUDP.new()
 
 
@@ -69,7 +69,6 @@ func prepare_message(osc_address : String, args : Array):
 				while fmod(pack.size(), 4):
 					pack.append(0)
 		packet.append_array(pack)
-	
 	return packet
 
 func send_message(osc_address : String, args : Array):

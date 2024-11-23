@@ -38,4 +38,3 @@ Use the method update_message(value) where the value can be either an array or a
 Below are links to demo projects using common electronic music software:
 
 * Supercollider - https://github.com/afarra6/sc-osc-demo
-

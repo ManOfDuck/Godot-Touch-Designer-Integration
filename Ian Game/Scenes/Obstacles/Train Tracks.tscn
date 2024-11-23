@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://jsscitkkhkc3"]
+
+[ext_resource type="PackedScene" uid="uid://crg1i46xfj0pc" path="res://Ian Game/Scenes/Obstacles/obstacle.tscn" id="1_nfyku"]
+[ext_resource type="PackedScene" uid="uid://i3olokfk7wd3" path="res://Ian Game/Scenes/train_tracks_grey.tscn" id="2_8e8rd"]
+[ext_resource type="Texture2D" uid="uid://c0bht53nuelrk" path="res://Ian Game/Textures/Train background.png" id="3_b15gu"]
+[ext_resource type="Texture2D" uid="uid://dqs125v51kpys" path="res://Ian Game/Textures/Tracks only.png" id="4_snhpp"]
+
+[node name="Obstacle" instance=ExtResource("1_nfyku")]
+
+[node name="BG" parent="." index="0" instance=ExtResource("2_8e8rd")]
+visible = false
+light_mask = 2
+z_index = -3
+position = Vector2(997, 1858)
+scale = Vector2(25.6205, 46.4388)
+texture = ExtResource("3_b15gu")
+
+[node name="Tracks" parent="." index="1" instance=ExtResource("2_8e8rd")]
+light_mask = 5
+z_index = -3
+texture = ExtResource("4_snhpp")
+
+[node name="TrainTracksGrey" parent="." index="2" instance=ExtResource("2_8e8rd")]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8mwbfkd114bo"]
+
+[ext_resource type="Texture2D" uid="uid://cvxv3s5dvqf1o" path="res://Ian Game/Textures/Blumpldorf.png" id="1_11kes"]
+[ext_resource type="Script" path="res://Ian Game/Scenes/IanCharacter.gd" id="2_yjt60"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nakyl"]
+size = Vector2(224.865, 520.722)
+
+[node name="Blumpldorf" type="RigidBody2D"]
+position = Vector2(171, 462)
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.62946, 0)
+shape = SubResource("RectangleShape2D_nakyl")
+
+[node name="Sprite" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(-1.62946, 0)
+texture = ExtResource("1_11kes")
+script = ExtResource("2_yjt60")

@@ -1,0 +1,181 @@
+[gd_scene load_steps=10 format=3 uid="uid://l3v1ug3utq4c"]
+
+[ext_resource type="PackedScene" uid="uid://crg1i46xfj0pc" path="res://Ian Game/Scenes/Obstacles/obstacle.tscn" id="1_oxwbg"]
+[ext_resource type="PackedScene" uid="uid://ds2qpvb055yyl" path="res://Ian Game/Scenes/Obstacles/Crate.tscn" id="2_kxlxf"]
+[ext_resource type="Texture2D" uid="uid://caahnes4rrtlb" path="res://Ian Game/Textures/grey crate.png" id="3_dvo1n"]
+[ext_resource type="PackedScene" path="res://Ian Game/Scenes/Obstacles/Light Crate.tscn" id="4_oy16f"]
+[ext_resource type="Texture2D" uid="uid://dmvgti6s4pjis" path="res://Ian Game/Textures/grey create.png" id="5_em5el"]
+[ext_resource type="PackedScene" uid="uid://crqeuimby8pj6" path="res://Ian Game/Scenes/Obstacles/Red Car.tscn" id="6_tkhq4"]
+[ext_resource type="Texture2D" uid="uid://c0jepl7aa72dg" path="res://Ian Game/Textures/light grey crate.png" id="7_ytunm"]
+[ext_resource type="PackedScene" uid="uid://gbdtdr8aumtn" path="res://Ian Game/Scenes/Obstacles/Stoplight.tscn" id="8_b8psb"]
+[ext_resource type="Texture2D" uid="uid://beevnc1p3tavn" path="res://Ian Game/Textures/warning sign.png" id="9_3f33c"]
+
+[node name="Obstacle3" instance=ExtResource("1_oxwbg")]
+
+[node name="Obstacle" parent="." index="0" instance=ExtResource("2_kxlxf")]
+position = Vector2(160, 0)
+script = null
+
+[node name="Sprite2D" parent="Obstacle" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_dvo1n")
+
+[node name="Obstacle6" parent="." index="1" instance=ExtResource("4_oy16f")]
+position = Vector2(368, -128)
+script = null
+
+[node name="Sprite2D" parent="Obstacle6" index="1"]
+z_index = 1
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("5_em5el")
+
+[node name="Obstacle2" parent="." index="2" instance=ExtResource("4_oy16f")]
+position = Vector2(288, 0)
+script = null
+
+[node name="Sprite2D" parent="Obstacle2" index="1"]
+z_index = 1
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("5_em5el")
+
+[node name="Obstacle4" parent="." index="3" instance=ExtResource("6_tkhq4")]
+position = Vector2(1416, 16)
+script = null
+
+[node name="Obstacle3" parent="." index="4" instance=ExtResource("2_kxlxf")]
+position = Vector2(240, -128)
+script = null
+
+[node name="Sprite2D" parent="Obstacle3" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("7_ytunm")
+
+[node name="Obstacle5" parent="." index="5" instance=ExtResource("2_kxlxf")]
+position = Vector2(1096, 8)
+script = null
+
+[node name="Sprite2D" parent="Obstacle5" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("7_ytunm")
+
+[node name="Obstacle7" parent="." index="6" instance=ExtResource("2_kxlxf")]
+position = Vector2(616, 0)
+script = null
+
+[node name="Sprite2D" parent="Obstacle7" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_dvo1n")
+
+[node name="Obstacle8" parent="." index="7" instance=ExtResource("2_kxlxf")]
+position = Vector2(664, -128)
+script = null
+
+[node name="Sprite2D" parent="Obstacle8" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_dvo1n")
+
+[node name="Obstacle9" parent="." index="8" instance=ExtResource("2_kxlxf")]
+position = Vector2(624, -256)
+script = null
+
+[node name="Sprite2D" parent="Obstacle9" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_dvo1n")
+
+[node name="Obstacle10" parent="." index="9" instance=ExtResource("2_kxlxf")]
+position = Vector2(592, -384)
+script = null
+
+[node name="Sprite2D" parent="Obstacle10" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_dvo1n")
+
+[node name="Obstacle11" parent="." index="10" instance=ExtResource("2_kxlxf")]
+position = Vector2(1112, -120)
+script = null
+
+[node name="Sprite2D" parent="Obstacle11" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_dvo1n")
+
+[node name="Obstacle12" parent="." index="11" instance=ExtResource("8_b8psb")]
+position = Vector2(984, -16)
+script = null
+
+[node name="WarningSign" type="Sprite2D" parent="." index="12"]
+z_index = -1
+position = Vector2(-72, -168)
+scale = Vector2(0.372611, 0.372611)
+texture = ExtResource("9_3f33c")
+
+[node name="Obstacle13" parent="." index="13" instance=ExtResource("2_kxlxf")]
+position = Vector2(1648, -384)
+script = null
+
+[node name="Sprite2D" parent="Obstacle13" index="0"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("3_dvo1n")
+
+[node name="Obstacle14" parent="." index="14" instance=ExtResource("4_oy16f")]
+position = Vector2(616, -512)
+script = null
+
+[node name="Sprite2D" parent="Obstacle14" index="1"]
+z_index = 1
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("5_em5el")
+
+[node name="Obstacle15" parent="." index="15" instance=ExtResource("4_oy16f")]
+position = Vector2(304, -256)
+script = null
+
+[node name="Sprite2D" parent="Obstacle15" index="1"]
+z_index = 1
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("5_em5el")
+
+[node name="Obstacle16" parent="." index="16" instance=ExtResource("4_oy16f")]
+position = Vector2(1312, -384)
+script = null
+
+[node name="Sprite2D" parent="Obstacle16" index="1"]
+z_index = 1
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("5_em5el")
+
+[node name="Obstacle17" parent="." index="17" instance=ExtResource("4_oy16f")]
+position = Vector2(1272, -512)
+script = null
+
+[node name="Sprite2D" parent="Obstacle17" index="1"]
+z_index = 1
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("5_em5el")
+
+[node name="Obstacle18" parent="." index="18" instance=ExtResource("2_kxlxf")]
+position = Vector2(1688, 16)
+script = null
+
+[node name="Obstacle19" parent="." index="19" instance=ExtResource("4_oy16f")]
+position = Vector2(1512, 16)
+script = null
+
+[node name="Obstacle20" parent="." index="20" instance=ExtResource("4_oy16f")]
+position = Vector2(592, -384)
+script = null
+
+[editable path="Obstacle"]
+[editable path="Obstacle6"]
+[editable path="Obstacle2"]
+[editable path="Obstacle3"]
+[editable path="Obstacle5"]
+[editable path="Obstacle7"]
+[editable path="Obstacle8"]
+[editable path="Obstacle9"]
+[editable path="Obstacle10"]
+[editable path="Obstacle11"]
+[editable path="Obstacle13"]
+[editable path="Obstacle14"]
+[editable path="Obstacle15"]
+[editable path="Obstacle16"]
+[editable path="Obstacle17"]

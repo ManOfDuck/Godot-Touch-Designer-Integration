@@ -1,0 +1,168 @@
+[gd_scene load_steps=14 format=3 uid="uid://dy8xu80k1rncj"]
+
+[sub_resource type="Gradient" id="Gradient_auous"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1s42t"]
+gradient = SubResource("Gradient_auous")
+fill_from = Vector2(0.0137615, 0)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="GDScript" id="GDScript_l0cf1"]
+resource_name = "rotating_light"
+script/source = "extends PointLight2D
+
+@export var change_chance: float = 1
+
+var speed_scale = 0
+@export var speed_scale_range: Vector2 = Vector2(0.3, 0.8)
+@export var y_scale_range: Vector2 = Vector2(10, 15)
+
+signal IAMDEAD
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	speed_scale = randf_range(speed_scale_range.x, speed_scale_range.y)
+	scale.y = randf_range(y_scale_range.x, y_scale_range.y)
+	$Rotator.play(\"rotate\")
+	$Rotator.seek(randf_range(0,2))
+	$Rotator.speed_scale = randf_range(0.8, 1.2)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	position.x -= IanGameManager.speed * speed_scale * delta
+	if position.x < -20:
+		IAMDEAD.emit(self)
+		queue_free()
+
+
+func light() -> void:
+	if randf_range(0,1) < change_chance:
+		$Lighter.stop()
+		$Lighter.play(\"light\")
+"
+
+[sub_resource type="Animation" id="Animation_s7ied"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_lw0ay"]
+resource_name = "rotate"
+length = 6.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.785398, 0.785398, -0.785398]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_22ryb"]
+_data = {
+"RESET": SubResource("Animation_s7ied"),
+"rotate": SubResource("Animation_lw0ay")
+}
+
+[sub_resource type="Animation" id="Animation_7flat"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ch1jd"]
+resource_name = "light"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 3.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fuuoq"]
+_data = {
+"RESET": SubResource("Animation_7flat"),
+"light": SubResource("Animation_ch1jd")
+}
+
+[sub_resource type="Gradient" id="Gradient_v1e7b"]
+colors = PackedColorArray(0.411765, 0.411765, 0.411765, 1, 0.41024, 0.41024, 0.41024, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2s0wl"]
+gradient = SubResource("Gradient_v1e7b")
+width = 80
+
+[sub_resource type="Gradient" id="Gradient_o5yov"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1kq1"]
+gradient = SubResource("Gradient_o5yov")
+height = 5
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[node name="PointLight2D" type="PointLight2D"]
+z_index = -4
+scale = Vector2(1.782, 12)
+energy = 0.0
+range_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_1s42t")
+offset = Vector2(0, -32)
+script = SubResource("GDScript_l0cf1")
+
+[node name="Rotator" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_22ryb")
+}
+autoplay = "RESET"
+
+[node name="Lighter" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fuuoq")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+light_mask = 5
+position = Vector2(-0.280247, -0.028498)
+scale = Vector2(1, 14)
+texture = SubResource("GradientTexture1D_2s0wl")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, -2)
+texture = SubResource("GradientTexture2D_d1kq1")

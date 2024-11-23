@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds7bvboa0yysq"]
+
+[ext_resource type="PackedScene" uid="uid://cghrenaylrrdt" path="res://Ian Game/Scenes/Obstacles/Long Obstacles/Purple Train Towards Player.tscn" id="1_7h4fy"]
+[ext_resource type="Texture2D" uid="uid://c40ghcejgbdsk" path="res://Ian Game/Textures/Duck Train.png" id="2_s3mv2"]
+[ext_resource type="Texture2D" uid="uid://dy6fxt0if7fog" path="res://Ian Game/Textures/duck car.png" id="3_34sr8"]
+[ext_resource type="Texture2D" uid="uid://d1kre8l4pu8se" path="res://Ian Game/Textures/Duck.png" id="4_e2pop"]
+
+[node name="Obstacle2" instance=ExtResource("1_7h4fy")]
+
+[node name="PurpleTrain" parent="." index="0"]
+position = Vector2(504, -192)
+scale = Vector2(1.68, 1.68)
+texture = ExtResource("2_s3mv2")
+
+[node name="PurpleCar" parent="." index="1"]
+position = Vector2(1896, -200)
+scale = Vector2(1.68, 1.68)
+texture = ExtResource("3_34sr8")
+
+[node name="Duck" type="Sprite2D" parent="." index="3"]
+z_index = -1
+position = Vector2(2712, -128)
+scale = Vector2(0.538647, 0.538647)
+texture = ExtResource("4_e2pop")
